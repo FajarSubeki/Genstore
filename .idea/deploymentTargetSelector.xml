@@ -4,10 +4,10 @@
     <selectionStates>
       <SelectionState runConfigName="Genstore.app">
         <option name="selectionMode" value="DROPDOWN" />
-        <DropdownSelection timestamp="2025-08-24T09:15:01.481176Z">
+        <DropdownSelection timestamp="2025-08-24T09:26:46.331035Z">
           <Target type="DEFAULT_BOOT">
             <handle>
-              <DeviceId pluginId="LocalEmulator" identifier="path=/Users/fajarsastroredjo/.android/avd/Pixel_7a.avd" />
+              <DeviceId pluginId="PhysicalDevice" identifier="serial=bb4f4765" />
             </handle>
           </Target>
         </DropdownSelection>

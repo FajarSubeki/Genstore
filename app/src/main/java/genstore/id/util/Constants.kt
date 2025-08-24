@@ -3,7 +3,7 @@ package genstore.id.util
 object Constants {
 
     const val BASE_URL = "https://dummyjson.com/"
-    const val PRODUCTS_ENDPOINT = "prodcts"
+    const val PRODUCTS_ENDPOINT = "products"
 
     // Query Params
     const val PARAM_LIMIT = "limit"
