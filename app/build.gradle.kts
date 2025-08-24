@@ -3,6 +3,7 @@ plugins {
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
     id("kotlin-kapt")
+    kotlin("plugin.serialization") version "2.0.21"
 }
 
 android {
@@ -68,6 +69,13 @@ dependencies {
     implementation(libs.room.ktx)
     implementation(libs.lifecycle.viewmodel)
     implementation(libs.lifecycle.runtime)
+
+    implementation(libs.coil.compose)
+    implementation(libs.gson)
+
+    implementation(libs.kotlinx.serialization.json)
+
+    implementation(libs.androidx.navigation.compose)
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
