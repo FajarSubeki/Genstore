@@ -1,14 +1,18 @@
 package genstore.id.presentation.component
 
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -20,7 +24,8 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import coil.compose.AsyncImage
+import com.skydoves.landscapist.ImageOptions
+import com.skydoves.landscapist.glide.GlideImage
 import genstore.id.domain.model.Product
 
 @Composable
@@ -36,14 +41,26 @@ fun ProductCard(product: Product, onClick: () -> Unit) {
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             // Thumbnail Image
-            AsyncImage(
-                model = product.thumbnail ?: "",
-                contentDescription = product.title ?: "Product",
+            GlideImage(
+                imageModel = { product.thumbnail ?: "" },
                 modifier = Modifier
                     .height(120.dp)
                     .fillMaxWidth()
                     .clip(RoundedCornerShape(12.dp)),
-                contentScale = ContentScale.Crop
+                imageOptions = ImageOptions(
+                    contentScale = ContentScale.Crop,
+                    alignment = Alignment.Center
+                ),
+                loading = {
+                    Box(Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+                        CircularProgressIndicator(modifier = Modifier.size(24.dp))
+                    }
+                },
+                failure = {
+                    Box(Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+                        Text("No Image", fontSize = 12.sp, color = Color.Gray)
+                    }
+                }
             )
 
             Spacer(modifier = Modifier.height(8.dp))

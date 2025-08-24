@@ -15,7 +15,6 @@ class ProductRepositoryImpl(
 
     override fun getProducts(page: Int, limit: Int): Flow<List<Product>> {
         val skip = page * limit
-
         return dao.getProducts(limit, skip).map { entities ->
             entities.map { it.toDomain() }
         }
@@ -23,25 +22,30 @@ class ProductRepositoryImpl(
 
     suspend fun fetchAndCacheProducts(page: Int, limit: Int) {
         val skip = page * limit
-        val response = api.getProducts(limit, skip)
+        try {
+            val response = api.getProducts(limit, skip)
 
-        val entities = response.products?.map {
-            ProductEntity(
-                id = it.id ?: 0,
-                title = it.title,
-                description = it.description,
-                category = it.category,
-                price = it.price,
-                rating = it.rating,
-                tags = it.tags,
-                thumbnail = it.thumbnail,
-                images = it.images
-            )
-        } ?: emptyList()
+            val entities = response.products?.map {
+                ProductEntity(
+                    id = it.id ?: 0,
+                    title = it.title,
+                    description = it.description,
+                    category = it.category,
+                    price = it.price,
+                    rating = it.rating,
+                    tags = it.tags,
+                    thumbnail = it.thumbnail,
+                    images = it.images
+                )
+            } ?: emptyList()
 
-        dao.insertAll(entities)
+            dao.insertAll(entities)
+        } catch (_: Exception) {
+            // fallback: offline mode, do nothing
+        }
     }
 }
+
 
 // Mapper
 fun ProductEntity.toDomain() = Product(
